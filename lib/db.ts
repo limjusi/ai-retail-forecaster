@@ -1,17 +1,11 @@
 // Use real SQLite locally, mock for Vercel deployment
+import { createMockDb } from './mock-data';
+
 let db: any;
 
 if (process.env.VERCEL) {
-  // Mock database for Vercel serverless
-  const mockDb = {
-    prepare: (query: string) => ({
-      run: (...args: any[]) => ({ changes: 0, lastInsertRowid: 0 }),
-      get: (...args: any[]) => null,
-      all: (...args: any[]) => [],
-    }),
-    exec: (query: string) => {},
-  };
-  db = mockDb;
+  // Mock database with demo data for Vercel serverless
+  db = createMockDb();
 } else {
   // Real SQLite for local development
   try {
@@ -21,16 +15,8 @@ if (process.env.VERCEL) {
     db = new Database(dbPath);
   } catch (error) {
     console.error('SQLite not available:', error);
-    // Fallback to mock if SQLite fails
-    const mockDb = {
-      prepare: (query: string) => ({
-        run: (...args: any[]) => ({ changes: 0, lastInsertRowid: 0 }),
-        get: (...args: any[]) => null,
-        all: (...args: any[]) => [],
-      }),
-      exec: (query: string) => {},
-    };
-    db = mockDb;
+    // Fallback to mock with demo data if SQLite fails
+    db = createMockDb();
   }
 }
 

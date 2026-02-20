@@ -1,16 +1,15 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+// Mock database for Vercel deployment
+// In production, this would be replaced with a proper database like Vercel Postgres
+const mockDb = {
+  prepare: (query: string) => ({
+    run: (...args: any[]) => ({ changes: 0, lastInsertRowid: 0 }),
+    get: (...args: any[]) => null,
+    all: (...args: any[]) => [],
+  }),
+  exec: (query: string) => {},
+};
 
-let db: Database.Database;
-
-try {
-  const dbPath = path.join(process.cwd(), 'data.db');
-  db = new Database(dbPath);
-} catch (error) {
-  // Fallback for serverless environments where SQLite might not work
-  console.warn('SQLite not available, using in-memory database');
-  db = new Database(':memory:');
-}
+const db = mockDb as any;
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (

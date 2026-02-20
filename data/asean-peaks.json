@@ -1,0 +1,62 @@
+{
+  "electronics": {
+    "peaks": ["November", "December"],
+    "reason": "Year-end sales, Black Friday, Cyber Monday, Christmas shopping",
+    "multiplier": 2.5
+  },
+  "fashion": {
+    "peaks": ["January", "February", "June", "November"],
+    "reason": "CNY preparations, mid-year sales, year-end sales",
+    "multiplier": 2.0
+  },
+  "beauty": {
+    "peaks": ["January", "February", "May", "November"],
+    "reason": "CNY prep, Mother's Day, Singles Day, year-end",
+    "multiplier": 1.8
+  },
+  "home-living": {
+    "peaks": ["January", "February", "March"],
+    "reason": "CNY renovations, spring cleaning, new year refresh",
+    "multiplier": 2.2
+  },
+  "toys": {
+    "peaks": ["May", "June", "November", "December"],
+    "reason": "Children's Day, mid-year holidays, Christmas",
+    "multiplier": 2.3
+  },
+  "groceries": {
+    "peaks": ["January", "February", "April", "May"],
+    "reason": "CNY stockpiling, Hari Raya preparations",
+    "multiplier": 1.6
+  },
+  "sports": {
+    "peaks": ["January", "June", "July"],
+    "reason": "New Year fitness goals, summer activities",
+    "multiplier": 1.7
+  },
+  "books": {
+    "peaks": ["January", "June", "November"],
+    "reason": "School year start, mid-year break, year-end sales",
+    "multiplier": 1.5
+  },
+  "health": {
+    "peaks": ["January", "February"],
+    "reason": "New Year health resolutions, CNY wellness prep",
+    "multiplier": 1.9
+  },
+  "baby": {
+    "peaks": ["March", "April", "November", "December"],
+    "reason": "Baby fairs, year-end shopping",
+    "multiplier": 1.6
+  },
+  "automotive": {
+    "peaks": ["January", "December"],
+    "reason": "New year car maintenance, year-end bonuses",
+    "multiplier": 1.4
+  },
+  "pets": {
+    "peaks": ["January", "February", "October"],
+    "reason": "CNY pet care, Halloween pet costumes",
+    "multiplier": 1.5
+  }
+}

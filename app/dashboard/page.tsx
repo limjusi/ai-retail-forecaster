@@ -42,23 +42,46 @@ export default function Dashboard() {
       </header>
 
       <div className="container mx-auto px-2 md:px-4 py-4 md:py-6">
-        <div className="bg-slate-800 rounded-lg shadow-lg mb-4 md:mb-6 border border-slate-700">
-          <div className="flex border-b border-slate-700 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800">
+        {/* Mobile: Vertical Tabs */}
+        <div className="md:hidden bg-slate-800 rounded-lg shadow-lg mb-4 border border-slate-700 p-2">
+          <div className="grid grid-cols-2 gap-2">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-3 md:px-6 py-3 md:py-4 font-medium transition-colors whitespace-nowrap text-sm md:text-base ${
+                  className={`flex flex-col items-center gap-1 px-3 py-3 rounded-lg font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-indigo-600 text-white shadow-lg'
+                      : 'bg-slate-700 text-gray-400 hover:bg-slate-600 hover:text-gray-200'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="text-xs text-center leading-tight">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Desktop: Horizontal Tabs */}
+        <div className="hidden md:block bg-slate-800 rounded-lg shadow-lg mb-6 border border-slate-700">
+          <div className="flex border-b border-slate-700 overflow-x-auto">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'border-b-2 border-indigo-500 text-indigo-400 bg-slate-700 bg-opacity-50'
                       : 'text-gray-400 hover:text-gray-200 hover:bg-slate-700 hover:bg-opacity-30'
                   }`}
                 >
-                  <Icon className="w-4 h-4 md:w-5 md:h-5" />
-                  <span className="hidden sm:inline">{tab.label}</span>
-                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                  <Icon className="w-5 h-5" />
+                  <span>{tab.label}</span>
                 </button>
               );
             })}

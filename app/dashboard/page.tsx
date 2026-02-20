@@ -10,14 +10,16 @@ import PromoIdeas from '@/components/PromoIdeas';
 import SyncButton from '@/components/SyncButton';
 import PlatformComparison from '@/components/PlatformComparison';
 import CSVImport from '@/components/CSVImport';
+import GrowthMetrics from '@/components/GrowthMetrics';
 
-type TabType = 'overview' | 'platforms' | 'peaks' | 'stock' | 'promos' | 'import' | 'connect';
+type TabType = 'overview' | 'platforms' | 'peaks' | 'stock' | 'promos' | 'import' | 'connect' | 'analytics';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
 
   const tabs = [
     { id: 'overview' as TabType, label: 'Sales Overview', icon: TrendingUp },
+    { id: 'analytics' as TabType, label: 'Growth Analytics', icon: BarChart3 },
     { id: 'platforms' as TabType, label: 'Platform Comparison', icon: BarChart3 },
     { id: 'peaks' as TabType, label: 'Industry Peaks', icon: BarChart3 },
     { id: 'stock' as TabType, label: 'Stock Suggestions', icon: Package },
@@ -70,6 +72,7 @@ export default function Dashboard() {
               <SalesChart />
             </>
           )}
+          {activeTab === 'analytics' && <GrowthMetrics />}
           {activeTab === 'platforms' && <PlatformComparison />}
           {activeTab === 'peaks' && <IndustryPeaks />}
           {activeTab === 'stock' && <StockSuggestions />}

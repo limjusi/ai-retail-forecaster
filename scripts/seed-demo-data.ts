@@ -135,23 +135,45 @@ try {
 
         const platformPerformance = platform === 'tiktok' ? 1.2 : platform === 'shopee' ? 1.0 : 0.9;
 
-        for (let i = 0; i < 60; i++) {
-          const saleDate = subDays(new Date(), i);
+        // Generate sales data for the last 12 months (full year)
+        const twelveMonthsAgo = new Date();
+        twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+        
+        // Generate sales for 365 days with varying frequency
+        for (let i = 0; i < 365; i++) {
+          const saleDate = new Date(twelveMonthsAgo);
+          saleDate.setDate(saleDate.getDate() + i);
           const dateStr = format(saleDate, 'yyyy-MM-dd');
           
-          let baseUnits = Math.floor(Math.random() * 10) + 1;
+          // Not every product sells every day (60% chance of sale)
+          if (Math.random() > 0.6) continue;
+          
+          let baseUnits = Math.floor(Math.random() * 8) + 1;
           
           const month = saleDate.getMonth();
+          const dayOfWeek = saleDate.getDay();
+          
+          // Seasonal multipliers
           if (category.name === 'electronics' && (month === 10 || month === 11)) {
-            baseUnits *= 2.5;
+            baseUnits *= 2.5; // Black Friday, Christmas
           } else if (category.name === 'fashion' && (month === 0 || month === 1)) {
-            baseUnits *= 2.0;
-          } else if (category.name === 'groceries' && (month === 0 || month === 1)) {
-            baseUnits *= 1.6;
-          } else if (category.name === 'beauty' && platform === 'tiktok') {
-            baseUnits *= 1.5;
+            baseUnits *= 2.0; // Chinese New Year
+          } else if (category.name === 'beauty' && (month === 1 || month === 4 || month === 10)) {
+            baseUnits *= 1.8; // Valentine's, Mother's Day, 11.11
+          } else if (category.name === 'toys' && (month === 10 || month === 11)) {
+            baseUnits *= 2.2; // Christmas
+          } else if (category.name === 'groceries' && (month === 0 || month === 1 || month === 11)) {
+            baseUnits *= 1.6; // Holiday seasons
+          } else if (category.name === 'home-living' && (month === 0 || month === 5)) {
+            baseUnits *= 1.5; // New Year, Mid-year sales
           }
           
+          // Weekend boost (20% more sales on weekends)
+          if (dayOfWeek === 0 || dayOfWeek === 6) {
+            baseUnits *= 1.2;
+          }
+          
+          // Platform performance multiplier
           const units = Math.floor(baseUnits * platformPerformance);
           const revenue = units * price;
           

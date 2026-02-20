@@ -68,15 +68,15 @@ export default function CSVImport() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 md:p-8 border border-gray-200">
+    <div className="bg-slate-800 rounded-lg shadow-lg p-4 md:p-8 border border-slate-700">
       <div className="mb-4 md:mb-6">
-        <h2 className="text-xl md:text-2xl font-bold mb-2 text-gray-900">Import Sales Data</h2>
-        <p className="text-sm md:text-base text-gray-600">Upload your sales data from any platform via CSV</p>
+        <h2 className="text-xl md:text-2xl font-bold mb-2 text-white">Import Sales Data</h2>
+        <p className="text-sm md:text-base text-gray-400">Upload your sales data from any platform via CSV</p>
       </div>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {/* Upload Section */}
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 md:p-8 text-center hover:border-indigo-500 transition-colors bg-gray-50">
+        <div className="border-2 border-dashed border-slate-600 rounded-lg p-6 md:p-8 text-center hover:border-indigo-500 transition-colors bg-slate-700 bg-opacity-50">
           <input
             ref={fileInputRef}
             type="file"
@@ -90,25 +90,25 @@ export default function CSVImport() {
             className="cursor-pointer flex flex-col items-center"
           >
             <Upload className="w-10 h-10 md:w-12 md:h-12 text-gray-400 mb-4" />
-            <p className="text-base md:text-lg font-semibold mb-2 text-gray-900">
+            <p className="text-base md:text-lg font-semibold mb-2 text-white">
               {uploading ? 'Uploading...' : 'Click to Upload CSV'}
             </p>
-            <p className="text-xs md:text-sm text-gray-500">
+            <p className="text-xs md:text-sm text-gray-400">
               or drag and drop your sales data file
             </p>
           </label>
         </div>
 
         {/* Template Section */}
-        <div className="border border-gray-200 rounded-lg p-6 md:p-8 bg-gray-50">
-          <FileText className="w-10 h-10 md:w-12 md:h-12 text-indigo-600 mb-4" />
-          <h3 className="text-base md:text-lg font-semibold mb-2 text-gray-900">Download Template</h3>
-          <p className="text-xs md:text-sm text-gray-600 mb-4">
+        <div className="border border-slate-600 rounded-lg p-6 md:p-8 bg-slate-700 bg-opacity-50">
+          <FileText className="w-10 h-10 md:w-12 md:h-12 text-indigo-400 mb-4" />
+          <h3 className="text-base md:text-lg font-semibold mb-2 text-white">Download Template</h3>
+          <p className="text-xs md:text-sm text-gray-400 mb-4">
             Get a sample CSV file with the correct format
           </p>
           <button
             onClick={downloadTemplate}
-            className="flex items-center gap-2 bg-gray-800 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm md:text-base"
+            className="flex items-center gap-2 bg-indigo-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors text-sm md:text-base"
           >
             <Download className="w-4 h-4" />
             Download Template
@@ -148,9 +148,9 @@ export default function CSVImport() {
       )}
 
       {/* Instructions */}
-      <div className="mt-4 md:mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-6">
-        <h3 className="font-semibold text-blue-900 mb-3 text-sm md:text-base">CSV Format Requirements</h3>
-        <ul className="space-y-2 text-xs md:text-sm text-blue-800">
+      <div className="mt-4 md:mt-6 bg-blue-600 bg-opacity-20 border border-blue-500 border-opacity-30 rounded-lg p-4 md:p-6">
+        <h3 className="font-semibold text-blue-400 mb-3 text-sm md:text-base">CSV Format Requirements</h3>
+        <ul className="space-y-2 text-xs md:text-sm text-gray-300">
           <li className="flex items-start gap-2">
             <span className="text-blue-600 mt-0.5">•</span>
             <span><strong>date</strong>: Format YYYY-MM-DD (e.g., 2024-01-15)</span>

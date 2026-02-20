@@ -1,15 +1,38 @@
-// Mock database for Vercel deployment
-// In production, this would be replaced with a proper database like Vercel Postgres
-const mockDb = {
-  prepare: (query: string) => ({
-    run: (...args: any[]) => ({ changes: 0, lastInsertRowid: 0 }),
-    get: (...args: any[]) => null,
-    all: (...args: any[]) => [],
-  }),
-  exec: (query: string) => {},
-};
+// Use real SQLite locally, mock for Vercel deployment
+let db: any;
 
-const db = mockDb as any;
+if (process.env.VERCEL) {
+  // Mock database for Vercel serverless
+  const mockDb = {
+    prepare: (query: string) => ({
+      run: (...args: any[]) => ({ changes: 0, lastInsertRowid: 0 }),
+      get: (...args: any[]) => null,
+      all: (...args: any[]) => [],
+    }),
+    exec: (query: string) => {},
+  };
+  db = mockDb;
+} else {
+  // Real SQLite for local development
+  try {
+    const Database = require('better-sqlite3');
+    const path = require('path');
+    const dbPath = path.join(process.cwd(), 'data.db');
+    db = new Database(dbPath);
+  } catch (error) {
+    console.error('SQLite not available:', error);
+    // Fallback to mock if SQLite fails
+    const mockDb = {
+      prepare: (query: string) => ({
+        run: (...args: any[]) => ({ changes: 0, lastInsertRowid: 0 }),
+        get: (...args: any[]) => null,
+        all: (...args: any[]) => [],
+      }),
+      exec: (query: string) => {},
+    };
+    db = mockDb;
+  }
+}
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (

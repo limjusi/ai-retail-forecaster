@@ -1,8 +1,16 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 
-const dbPath = path.join(process.cwd(), 'data.db');
-const db = new Database(dbPath);
+let db: Database.Database;
+
+try {
+  const dbPath = path.join(process.cwd(), 'data.db');
+  db = new Database(dbPath);
+} catch (error) {
+  // Fallback for serverless environments where SQLite might not work
+  console.warn('SQLite not available, using in-memory database');
+  db = new Database(':memory:');
+}
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (

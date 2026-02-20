@@ -84,9 +84,17 @@ export const createMockDb = () => {
         
         // Handle sales overview queries
         if (queryLower.includes('sum(revenue)') && queryLower.includes('sum(units_sold)')) {
-          const totalRevenue = mockSales.reduce((sum, s) => sum + s.revenue, 0);
-          const totalUnits = mockSales.reduce((sum, s) => sum + s.units_sold, 0);
-          const totalOrders = mockSales.length;
+          // Check if there's a date filter
+          const dateFilter = args[0];
+          let filteredSales = mockSales;
+          
+          if (dateFilter) {
+            filteredSales = mockSales.filter(s => s.sale_date >= dateFilter);
+          }
+          
+          const totalRevenue = filteredSales.reduce((sum, s) => sum + s.revenue, 0);
+          const totalUnits = filteredSales.reduce((sum, s) => sum + s.units_sold, 0);
+          const totalOrders = filteredSales.length;
           
           return {
             totalRevenue,
@@ -184,14 +192,48 @@ export const createMockDb = () => {
           const platformSales: any = {};
           mockSales.forEach(sale => {
             if (!platformSales[sale.platform]) {
-              platformSales[sale.platform] = { platform: sale.platform, revenue: 0, units: 0, orders: 0 };
+              platformSales[sale.platform] = { 
+                platform: sale.platform, 
+                revenue: 0, 
+                units: 0, 
+                orders: 0,
+                totalRevenue: 0,
+                totalUnits: 0,
+                totalOrders: 0
+              };
             }
             platformSales[sale.platform].revenue += sale.revenue;
             platformSales[sale.platform].units += sale.units_sold;
             platformSales[sale.platform].orders += 1;
+            platformSales[sale.platform].totalRevenue += sale.revenue;
+            platformSales[sale.platform].totalUnits += sale.units_sold;
+            platformSales[sale.platform].totalOrders += 1;
           });
           
           return Object.values(platformSales);
+        }
+        
+        // Handle platform + category queries for Platform Comparison
+        if (queryLower.includes('p.category_name') && queryLower.includes('s.platform')) {
+          const platformCategorySales: any = {};
+          mockSales.forEach(sale => {
+            const product = mockProducts.find(p => p.id === sale.product_id);
+            if (product) {
+              const key = `${sale.platform}_${product.category_name}`;
+              if (!platformCategorySales[key]) {
+                platformCategorySales[key] = {
+                  platform: sale.platform,
+                  category: product.category_name,
+                  revenue: 0,
+                  units: 0,
+                };
+              }
+              platformCategorySales[key].revenue += sale.revenue;
+              platformCategorySales[key].units += sale.units_sold;
+            }
+          });
+          
+          return Object.values(platformCategorySales);
         }
         
         return [];

@@ -13,7 +13,7 @@ export function formatCurrency(amount: number, currency: string = 'SGD'): string
 }
 
 export function formatDate(date: string | Date): string {
-  return new Intl.DateFormat('en-SG', {
+  return new Intl.DateTimeFormat('en-SG', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

@@ -22,7 +22,9 @@ if (process.env.VERCEL) {
   }
 }
 
-db.exec(`
+// Only run table creation on real SQLite database
+if (!process.env.VERCEL && db.exec) {
+  db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT UNIQUE,
@@ -89,6 +91,7 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_sales_product ON sales(product_id);
   CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_name);
 `);
+}
 
 export default db;
 
